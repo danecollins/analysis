@@ -44,24 +44,24 @@ def test_linear_median_bin_center():
     assert linear_median == actual_median
 
 
-def test_pareto_median_():
-    """ It's hard to create real data that the pareto interpolation will
-        give good results on. I would need to generate the points based on
-        the right algorithm but I don't know what that is.
+def test_pareto_median():
+    """ test data from
+        http://www.sipp.census.gov/sipp/sourceac/S%26A01_20060323_Long%28S%26A-3%29.pdf
     """
     # how many points we want in each bin
-    cnts = [320, 2110, 3060, 3230, 1820, 1190, 1850]
-    # try to create a distribution that is somewhat close to this
-    i = np.random.normal(loc=35000, scale=35000, size=13580)
-    i = np.append(i, np.random.normal(loc=150000, scale=40000, size=1800))
-    i = i[i > 1]
-    i = np.append(np.zeros(320), i)  # fix the bottom bin
+    theta, k = Pareto.comp_tg(17500, 1 - 0.555, 20000, 1 - 0.409)
+    computed_median = Pareto.med(theta, k)
+    assert computed_median > 18209
+    assert computed_median < 18425
 
-    bins = get_bins(i)
-    obj = County('dummy', bins)
-    pareto_median = obj.pareto_median()
-    actual_median = np.median(i)
-    pct_error = abs((pareto_median - actual_median) / actual_median)
-    assert pct_error < 0.04
 
+def test_pareto_threshold():
+    """ test data from
+        http://www.sipp.census.gov/sipp/sourceac/S%26A01_20060323_Long%28S%26A-3%29.pdf
+    """
+    # how many points we want in each bin
+    theta, k = Pareto.comp_tg(17500, 1 - 0.555, 20000, 1 - 0.409)
+    computed_median = Pareto.income_thresholds(.5, theta, k)
+    assert computed_median > 18209
+    assert computed_median < 18425
 

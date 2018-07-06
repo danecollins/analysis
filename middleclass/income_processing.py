@@ -3,7 +3,10 @@ import pdb
 
 
 class Pareto:
-    """ Low-level functions implementing the pareto interpolation """
+    """ Low-level functions implementing the pareto interpolation
+
+        https://en.wikipedia.org/wiki/Pareto_interpolation
+    """
 
     @staticmethod
     def comp_tg(a, Pa, b, Pb):
@@ -19,7 +22,7 @@ class Pareto:
 
     @staticmethod
     def med(theta, K):
-        return K * (2 ** 1/theta)
+        return K * (2 ** (1/theta))  # parens are needed around 1/theta
 
     @staticmethod
     def threshold(pct, theta, K):
@@ -28,7 +31,7 @@ class Pareto:
 
 
 class Bracket:
-    """ A bracket stores what percentage of returns are below the amount """x
+    """ A bracket stores what percentage of returns are below the amount """
     def __init__(self, amt, cnt, pct):
         self.amount = amt
         self.count = cnt
