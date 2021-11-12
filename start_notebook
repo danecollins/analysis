@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd /Users/dane/src/analysis
+source ~/env/jup/bin/activate
+source ~/odd/osx/env_vars/jup_vars
+jupyter notebook > jupyter.log &
